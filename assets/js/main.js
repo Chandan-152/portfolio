@@ -33,7 +33,7 @@ function headerShadow() {
 
 /* ----- TYPING EFFECT ----- */
 var typingEffect = new Typed(".typedText",{
-  strings : ["Chandan ", "Software Devloper"],
+  strings : ["Chandan ", "Data Analyst"],
   loop : true,
   typeSpeed : 150, 
   backSpeed : 50,
@@ -115,3 +115,48 @@ sections.forEach(current =>{
 }
 
 window.addEventListener('scroll', scrollActive)
+
+/* ----- EMAIL VALIDATION ----- */
+function validateEmail() {
+  const emailInput = document.getElementById("email");
+  const email = emailInput.value.trim();
+
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
+
+  if (!emailRegex.test(email)) {
+    alert("❌ Please enter a valid email address (like changxxx@gmail.com)");
+    return false;
+  }
+
+  return true;
+}
+
+
+/* ----- CONTACT FORM SUBMISSION (Formspree Integration) ----- */
+
+const form = document.querySelector("form");
+
+form.addEventListener("submit", function (e) {
+  e.preventDefault();
+
+  if (!validateEmail()) {
+    return;
+  }
+
+  const formData = new FormData(form);
+
+  fetch(form.action, {
+    method: "POST",
+    body: formData,
+    headers: {
+      Accept: "application/json",
+    },
+  }).then(response => {
+    if (response.ok) {
+      alert("✅ Thanks! Your message has been sent.");
+      form.reset();
+    } else {
+      alert("❌ Oops! Something went wrong.");
+    }
+  });
+});
